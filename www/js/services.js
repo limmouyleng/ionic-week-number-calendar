@@ -1,7 +1,7 @@
 angular.module('starter')
 
 .service('WeeklyService', function($filter) {
-  function getWeeks(year){
+  function getWeeks(year, index){
     day = $filter('date')(new Date('Jan 01, ' + year), "EEE");
     firstWeek = ''; endWeek = '';
     switch (day) {
@@ -32,9 +32,9 @@ angular.module('starter')
       default:
         endWeek = $filter('date')(new Date('Dec 31, ' + year), 'ww');
     }
-    i = 1;
+    i = index;
     weeks = [];
-    while(i<=52){
+    while(i < index + 9){
       row = [];
       for (j = i; j < i + 3 ; j++){
         if(j<= 52)
