@@ -1,6 +1,8 @@
 angular.module('starter')
 
 .service('WeeklyService', function($filter) {
+  isDisabledNextButton = false;
+  isDisabledPreviousButton = false;
   function getWeeks(year, index){
     day = $filter('date')(new Date('Jan 01, ' + year), "EEE");
     firstWeek = ''; endWeek = '';
@@ -13,6 +15,7 @@ angular.module('starter')
         break;
       default:
         firstWeek = $filter('date')(new Date('Jan 01, ' + year), 'ww');
+        break;
     }
 
     endDay = $filter('date')(new Date('Dec 31, '+ year), "EEE");
@@ -31,7 +34,12 @@ angular.module('starter')
         break;
       default:
         endWeek = $filter('date')(new Date('Dec 31, ' + year), 'ww');
+        break;
     }
+    if(index == 1)
+      setDisabledPreviousButton(true);
+    else
+      setDisabledPreviousButton(false);
     i = index;
     weeks = [];
     while(i < index + 9){
@@ -41,6 +49,10 @@ angular.module('starter')
           row.push(j);
         else
           break;
+        if(j>=52)
+          setDisabledNextButton(true);
+        else
+          setDisabledNextButton(false);
       }
       i += 3;
       weeks.push({"row": row});
@@ -48,7 +60,25 @@ angular.module('starter')
     return weeks;
   }
 
+  function setDisabledNextButton(isDisabled) {
+    isDisabledNextButton = isDisabled;
+  }
+
+  function getDisabledNextButton() {
+    return isDisabledNextButton;
+  }
+
+  function setDisabledPreviousButton(isDisabled) {
+    isDisabledPreviousButton = isDisabled;
+  }
+
+  function getDisabledPreviousButton() {
+    return isDisabledPreviousButton;
+  }
+
   return {
-    getWeeks: getWeeks
+    getWeeks: getWeeks,
+    isDisabledNextButton: getDisabledNextButton,
+    isDisabledPreviousButton: getDisabledPreviousButton,
   }
 })

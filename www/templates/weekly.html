@@ -1,13 +1,30 @@
-<ion-view view-title="Weekly Calendar" name="weekly-calendar-view" ng-controller='AppCtrl'>
+<ion-view view-title="Weekly Calendar" name="weekly-calendar-view">
   <ion-content class="padding">
-      <div style="width: 99%; height:45%; background-color:#f4f4f4">
-        <div class="row" ng-repeat="week in weeks">
-          <div class="col-20 col-offset-10" ng-repeat="row in week.row">
-            <button class="button button-block">{{row}}</button>
-          </div>
+    <label class="item item-input item-select item-stable">
+      <div class="input-label">
+          Select year
+      </div>
+      <select>
+          <option selected="">{{currentYear}}</option>
+      </select>
+    </label>
+    <br>
+    <div style="width: 99%; height:45%; background-color:#f4f4f4">
+      <div class="row" ng-repeat="week in weeks">
+        <div class="col-20 col-offset-10" ng-repeat="row in week.row">
+          <button class="button button-block">{{row}}</button>
         </div>
-        <button class="button icon-left ion-chevron-left button-stable" ng-click='previous()'></button>
-        <button class="button icon-left ion-chevron-right button-stable" ng-click='next()'></button>
+      </div>
+      <div class="row">
+        <div class="col text-left">
+          <button class="button icon-left ion-chevron-left button-stable"
+                  ng-click='previous()' ng-disabled="isDisabledPreviousButton"></button>
+        </div>
+        <div class="col text-right">
+          <button class="button icon-left ion-chevron-right button-stable"
+                ng-click='next()' ng-disabled="isDisabledNextButton"></button>
+        </div>
+      </div>
       </div>
   </ion-content>
 </ion-view>
