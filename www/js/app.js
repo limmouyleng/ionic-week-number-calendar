@@ -19,6 +19,6 @@ angular.module('starter', ['ionic'])
     templateUrl: 'templates/weekly.html',
     controller: 'AppCtrl'
   })
-
+  
   $urlRouterProvider.otherwise('/app')
 })

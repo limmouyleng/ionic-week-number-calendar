@@ -3,22 +3,37 @@ angular.module('starter')
 .service('WeeklyService', function($filter) {
   isDisabledNextButton = false;
   isDisabledPreviousButton = false;
-  function getWeeks(year, index){
-    day = $filter('date')(new Date('Jan 01, ' + year), "EEE");
-    firstWeek = ''; endWeek = '';
-    switch (day) {
-      case 'Fri':
-        firstWeek = $filter('date')(new Date('Jan 03, ' + year), 'ww');
-        break;
-      case 'Sat':
-        firstWeek = $filter('date')(new Date('Jan 02, ' + year), 'ww');
-        break;
-      default:
-        firstWeek = $filter('date')(new Date('Jan 01, ' + year), 'ww');
-        break;
-    }
 
+  function setDisabledNextButton(isDisabled) {
+    isDisabledNextButton = isDisabled;
+  }
+
+  function getDisabledNextButton() {
+    return isDisabledNextButton;
+  }
+
+  function setDisabledPreviousButton(isDisabled) {
+    isDisabledPreviousButton = isDisabled;
+  }
+
+  function getDisabledPreviousButton() {
+    return isDisabledPreviousButton;
+  }
+
+  //Sunday is the first day of the week and Week 01 is the week with the first Thursday of the year
+  function getWeeks(year, index){
+    firstWeek = ''; endWeek = '';
+
+    day = $filter('date')(new Date('Jan 01, ' + year), "EEE");
     endDay = $filter('date')(new Date('Dec 31, '+ year), "EEE");
+
+    if(day == 'Fri')
+      firstWeek = $filter('date')(new Date('Jan 03, ' + year), 'ww');
+    else if (day == 'Sat')
+      firstWeek = $filter('date')(new Date('Jan 02, ' + year), 'ww');
+    else
+      firstWeek = $filter('date')(new Date('Jan 01, ' + year), 'ww');
+      
     switch (endDay) {
       case 'Sun':
         endWeek = $filter('date')(new Date('Dec 30, '+ year), 'ww');
@@ -58,22 +73,6 @@ angular.module('starter')
       weeks.push({"row": row});
     }
     return weeks;
-  }
-
-  function setDisabledNextButton(isDisabled) {
-    isDisabledNextButton = isDisabled;
-  }
-
-  function getDisabledNextButton() {
-    return isDisabledNextButton;
-  }
-
-  function setDisabledPreviousButton(isDisabled) {
-    isDisabledPreviousButton = isDisabled;
-  }
-
-  function getDisabledPreviousButton() {
-    return isDisabledPreviousButton;
   }
 
   return {

@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('AppCtrl', function($scope, $state, $filter, WeeklyService) {
+.controller('AppCtrl', function($scope, $filter, WeeklyService) {
   $scope.currentYear = $filter('date')(new Date(), "yyyy");
   $scope.index = 1;
   $scope.weeks = WeeklyService.getWeeks($scope.currentYear, $scope.index);
